@@ -5,6 +5,7 @@ using System.IO.Compression;
 using System.Text;
 using System.Drawing;
 using System.Drawing.Imaging;
+using System.Globalization;
 
 namespace WD7_ZipToCws
 {
@@ -13,16 +14,18 @@ namespace WD7_ZipToCws
         private const string RUN_GCODE_FILE_NAME = "run.gcode";
         private const string MANIFEST_XML_FILE_NAME = "manifest.xml";
         private const string GCODE_FILE_NAME = "1.gcode";
+        private const string ZIP_FILE = "import.zip";
 
         static void Main(string[] args)
         {
-            if (args.Length != 1)
+            var zipFileName = ZIP_FILE;//args[0];
+            if (args.Length == 1)
             {
-                Console.WriteLine("Please provide a zip file.");
-                Environment.Exit(0);
+                zipFileName = args[0];
+                //Console.WriteLine("Please provide a zip file.");
             }
 
-            var zipFileName = args[0];
+
 
             if (Path.GetExtension(zipFileName).ToLower() != ".zip")
             {
@@ -35,7 +38,7 @@ namespace WD7_ZipToCws
             try
             {
                 zipFile = ZipFile.OpenRead(zipFileName);
-            } 
+            }
             catch (Exception e)
             {
                 Console.WriteLine("Fail to load the zip file.");
@@ -124,7 +127,8 @@ namespace WD7_ZipToCws
             }
             Console.WriteLine("done");
 
-            var cwsFile = Path.GetFileNameWithoutExtension(zipFileName) + ".cws";
+            var name = Path.GetFileNameWithoutExtension(zipFileName);
+            var cwsFile = (name == "import" ? "export" : name) + ".cws";
             Console.WriteLine($"Preparing to create {cwsFile}...");
             using (var memoryStream = new MemoryStream())
             {
@@ -135,7 +139,7 @@ namespace WD7_ZipToCws
                     Console.WriteLine($"Adding {MANIFEST_XML_FILE_NAME}...");
                     AddTextFileInArchive(archive, MANIFEST_XML_FILE_NAME, manifestXmlData);
 
-                    for(var i = 1; i <= totalLayers; i++)
+                    for (var i = 1; i <= totalLayers; i++)
                     {
                         Console.WriteLine($"Adding {i}.png...");
                         CopyPngFileFromArchive(zipFile, archive, $"{i}.png", "slice" + (i - 1).ToString("0000") + ".png");
@@ -147,7 +151,7 @@ namespace WD7_ZipToCws
                 }
 
                 Console.Write($"Writing {cwsFile} to disk...");
-                using (var fileStream = new FileStream(Path.GetFileNameWithoutExtension(zipFileName) + ".cws", FileMode.Create))
+                using (var fileStream = new FileStream(cwsFile, FileMode.Create))
                 {
                     memoryStream.Seek(0, SeekOrigin.Begin);
                     memoryStream.CopyTo(fileStream);
@@ -209,7 +213,7 @@ namespace WD7_ZipToCws
             var file = dstArchive.CreateEntry(dstFileName, CompressionLevel.Optimal);
             file.ExternalAttributes = file.ExternalAttributes | (Convert.ToInt32("664", 8) << 16);
             using (var fileStream = file.Open())
-            ConvertPngTo32Bit(pngFileStream, fileStream);
+                ConvertPngTo32Bit(pngFileStream, fileStream);
 
             return true;
         }
@@ -259,7 +263,7 @@ namespace WD7_ZipToCws
             gCodeData.Append("G91 ; Relative Positioning\n");
             gCodeData.Append("M17 ; Enable motors\n");
 
-            for(var currentLayer = 0; currentLayer < totalLayers; currentLayer++)
+            for (var currentLayer = 0; currentLayer < totalLayers; currentLayer++)
             {
                 gCodeData.Append($";********** Pre-Slice {currentLayer} ********\n");
                 gCodeData.Append("G4 P0 ; Make sure any previous relative moves are complete\n");
@@ -269,7 +273,7 @@ namespace WD7_ZipToCws
                 gCodeData.Append(";<Delay> " + (currentLayer < bottomLayers ? bottomLayerExposureTime : normalExposureTime) + "\n");
                 gCodeData.Append("M106 S0 ; UV off\n");
                 gCodeData.Append(";<Slice> Blank\n");
-                gCodeData.Append(";<Delay> " + (currentLayer < bottomLayers ? bottomLightOffTime : lightOffTime)  + "\n");
+                gCodeData.Append(";<Delay> " + (currentLayer < bottomLayers ? bottomLightOffTime : lightOffTime) + "\n");
                 gCodeData.Append($";********** Lift Sequence {currentLayer} ******\n");
                 gCodeData.Append("G1 Z" + (currentLayer < bottomLayers ? bottomLayerLiftHeight : normalLayerLiftHeight) + " F" + (currentLayer < bottomLayers ? bottomLayerLiftSpeed : normalLayerLiftSpeed) + "\n");
                 gCodeData.Append("G4 P0 ; Wait for lift rise to complete\n");
@@ -310,7 +314,7 @@ namespace WD7_ZipToCws
             {
                 if (line.Contains(key))
                 {
-                    value = int.Parse(line.Substring(line.IndexOf(":") + 1));
+                    int.TryParse(line.Substring(line.IndexOf(":") + 1), out value);
                     break;
                 }
             }
@@ -324,7 +328,8 @@ namespace WD7_ZipToCws
             {
                 if (line.Contains(key))
                 {
-                    value = double.Parse(line.Substring(line.IndexOf(":") + 1));
+                    int ind = line.IndexOf(":");
+                    double.TryParse(line.Substring(ind + 1), out value);
                     break;
                 }
             }

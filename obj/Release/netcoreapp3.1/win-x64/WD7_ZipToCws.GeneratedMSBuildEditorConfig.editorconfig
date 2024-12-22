@@ -1,0 +1,8 @@
+is_global = true
+build_property.RootNamespace = WD7_ZipToCws
+build_property.ProjectDir = S:\Repos\WD7_ZipToCws_Upd\
+build_property.EnableComHosting = 
+build_property.EnableGeneratedComInterfaceComImportInterop = 
+build_property.CsWinRTUseWindowsUIXamlProjections = false
+build_property.EffectiveAnalysisLevelStyle = 
+build_property.EnableCodeStyleSeverity = 

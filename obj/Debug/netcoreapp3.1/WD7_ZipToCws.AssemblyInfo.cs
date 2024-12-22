@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("WD7_ZipToCws")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+e156292a4b6d866664a931057f308a6bdd7e7d54")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+3a1793710be257d46b11b0e3a84110e586d45c2c")]
 [assembly: System.Reflection.AssemblyProductAttribute("WD7_ZipToCws")]
 [assembly: System.Reflection.AssemblyTitleAttribute("WD7_ZipToCws")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

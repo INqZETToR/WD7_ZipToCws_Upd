@@ -1,0 +1,2 @@
+S:\Repos\WD7_ZipToCws_Upd\bin\publish\WD7_ZipToCws.pdb
+S:\Repos\WD7_ZipToCws_Upd\bin\publish\WD7_ZipToCws.exe

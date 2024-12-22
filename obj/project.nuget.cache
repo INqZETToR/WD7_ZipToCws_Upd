@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "rIqb3CTHLmQ=",
+  "dgSpecHash": "0GA6KJkJyuE=",
   "success": true,
-  "projectFilePath": "S:\\Repos\\WD7_ZipToCws_Upd\\WD7+ZipToCws.csproj",
+  "projectFilePath": "S:\\Repos\\WD7_ZipToCws_Upd\\WD7_ZipToCws.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\timaa\\.nuget\\packages\\corecompat.system.drawing\\1.0.0-beta006\\corecompat.system.drawing.1.0.0-beta006.nupkg.sha512",
     "C:\\Users\\timaa\\.nuget\\packages\\microsoft.netcore.platforms\\1.0.1\\microsoft.netcore.platforms.1.0.1.nupkg.sha512",

@@ -2339,9 +2339,9 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "S:\\Repos\\WD7_ZipToCws_Upd\\WD7+ZipToCws.csproj",
-      "projectName": "WD7+ZipToCws",
-      "projectPath": "S:\\Repos\\WD7_ZipToCws_Upd\\WD7+ZipToCws.csproj",
+      "projectUniqueName": "S:\\Repos\\WD7_ZipToCws_Upd\\WD7_ZipToCws.csproj",
+      "projectName": "WD7_ZipToCws",
+      "projectPath": "S:\\Repos\\WD7_ZipToCws_Upd\\WD7_ZipToCws.csproj",
       "packagesPath": "C:\\Users\\timaa\\.nuget\\packages\\",
       "outputPath": "S:\\Repos\\WD7_ZipToCws_Upd\\obj\\",
       "projectStyle": "PackageReference",
